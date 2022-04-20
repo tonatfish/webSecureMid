@@ -1,0 +1,25 @@
+version: "2"
+services:
+    back:
+        build: ./back-image
+        ports: 
+            - "8000:80"
+        volumes:
+            - ./www:/var/www/html/
+        links:
+            - db
+        networks:
+            - default
+    #     # hostname:  webpage-secure.tuna-web.software 
+    db:
+        image: mysql:5.7
+        environment:
+            MYSQL_DATABASE: webpage_mid
+            MYSQL_USER: api_user
+            MYSQL_PASSWORD: api_password
+            MYSQL_ROOT_PASSWORD: api_password
+        volumes:
+            - ./db:/docker-entrypoint-initdb.d
+        networks:
+            - default
+    #     # hostname:  webpage-secure.tuna-web.software 
